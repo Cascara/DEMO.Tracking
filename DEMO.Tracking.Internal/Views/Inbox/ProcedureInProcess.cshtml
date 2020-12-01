@@ -1,0 +1,138 @@
+﻿@{
+    ViewBag.Title = "Trámites en proceso";
+
+    List<ProcedureInstanceSummary> procedures = ViewBag.InProcess;
+    IConfiguration configuration = ViewBag.Configuration;
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <table id="dtuProceduresInProcess" class="table table-hover table-stripped table-bordered">
+            <thead class="no-border">
+                <tr>
+                    <th>Folio</th>
+                    <th>Asunto</th>
+                    <th>Inició</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody class="no-border-x hover">
+                @if (procedures.Count > 0)
+                {
+                    @foreach (ProcedureInstanceSummary procedure in procedures)
+                    {
+                        <tr class="inprocess" style="cursor: pointer;" data-procedure-ref-id="@procedure.RefId" data-procedure-key="@procedure.Key" data-documents-signed-ziped="@configuration["ApiBox"]/Execution/Box/DownloadZip?documents=@procedure.DocumentsSignedZiped">
+                            <td><strong>@procedure.Key</strong></td>
+                            <td>
+                                <strong>@procedure.Name</strong><br />
+                                <span>@procedure.Content.UserContent.Interesado</span><br />
+                                <span>@procedure.Content.UserContent.RFC</span>
+                            </td>
+                            <td>@procedure.Start.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>@procedure.States.principal</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="divModalActivities" class="modal fade" role="dialog" style="overflow-y: scroll;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Trámite: <span id="ProcedureKey"></span></h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="dtuActivities" class="table table-stripped table-bordered">
+                                <thead>
+                                    <tr role="row">
+                                        <th></th>
+                                        <th>Actividad</th>
+                                        <th>Responsable</th>
+                                        <th>Inició</th>
+                                        <th>Terminó</th>
+                                        <th>Duración</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="divModalSearchProcedures" class="modal fade" role="dialog" style="overflow-y: scroll;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Buscar</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Número:</label>
+                            <input id="key" type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Con el estado:</label>
+                            <select id="state" class="form-control">
+                                <option>En análisis</option>
+                                <option>En autorización</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Asunto:</label>
+                            <input id="subject" type="text" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Del:</label>
+                            <input id="from" type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>al:</label>
+                            <input id="to" type="text" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success"><i class="icon icon-search"></i> Buscar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script{
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/plugins/date.format/date.format.js"></script>
+    <script src="~/js/inbox/inprocess.js?v=1.0.4" type="text/javascript"></script>
+}

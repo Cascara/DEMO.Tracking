@@ -1,0 +1,331 @@
+﻿@{
+    IConfiguration configuration = ViewBag.Configuration;
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" dir="ltr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon" />
+    <meta name="description" content="Somos una empresa mexicana dedicada al suministro de energéticos, fundada en 1978 bajo un esquema orientado a la ecología y productividad." />
+    <meta name="abstract" content="Somos una empresa mexicana dedicada al suministro de energéticos, fundada en 1978 bajo un esquema orientado a la ecología y productividad." />
+    <meta name="keywords" content="ift, unidad, pleno del ift, licitaciones" />
+    <link rel="canonical" href="http://www.ift.org.mx/" />
+    <link rel="shortlink" href="http://www.ift.org.mx/" />
+
+    <title>Ambiente de desarrollo</title>
+
+    <!-- FONTS -->
+    <link rel="stylesheet" href="/font/fontawesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/font/fontawesome-animation/font-awesome-animation.min.css" />
+    <link rel="stylesheet" href="/font/glyphicons/glyphicons.css" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/plugins/bootstrap/3.3.7/css/bootstrap_ift.css" />
+
+    <!-- CSS IFT -->
+    <link rel="stylesheet" href="/ift/modules/radix_layouts/radix_layouts.css" />
+    <link rel="stylesheet" href="/ift/css_injector/css_injector_7.css" />
+    <link rel="stylesheet" href="/ift/css_injector/css_injector_13.css" />
+    <link rel="stylesheet" href="/ift/css_injector/css_injector_43.css" />
+    <link rel="stylesheet" href="/ift/css_injector/css_injector_78.css?v=1.0.0" />
+
+    <style>
+        li.expanded.dropdown > a:hover {
+            background-color: #2d5c27;
+            color: white;
+        }
+
+        .btnTransparentFooter {
+            border-color: none;
+            outline: none !important;
+        }
+
+            .btnTransparentFooter:focus, .btnTransparentFooter:active {
+                border: dotted 2px #fff !important;
+                outline: none !important;
+            }
+
+        a.btnTransparentFooter span:focus, a.btnTransparentFooter span:active {
+            border: dotted 2px #fff;
+        }
+
+        #redesFooterIft {
+            float: left;
+        }
+
+        a {
+            text-decoration: none !important;
+            background-color: transparent;
+            color: #12C;
+        }
+
+        .container {
+            width: 100%;
+        }
+    </style>
+
+    <link rel="stylesheet" href="/css/form_complement.css" />
+    <link rel="stylesheet" href="/css/styles.min.css?v=1.0.0" />
+
+    <!-- HTML5 element support for IE6-8 -->
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!-- SCRIPT -->
+    <script type="text/javascript" src="/plugins/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript" src="/plugins/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- SCRIPT IFT -->
+    <script type="text/javascript" src="/ift/misc/jquery.once.js?v=1.2"></script>
+    <script type="text/javascript" src="/ift/misc/drupal.js"></script>
+    <script type="text/javascript" src="/ift/modules/jquery_update/replace/misc/1.9/jquery.ba-bbq.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="/ift/modules/jquery_update/replace/misc/1.9/overlay-parent.js?v=1.0"></script>
+    <script type="text/javascript" src="/ift/es_kOvo4OI0rx6vpjt09FDkhuKwus7kmWmgHFTopmMp7BE.js"></script>
+    <script type="text/javascript" src="/ift/modules/jquery_ajax_load/jquery_ajax_load.js"></script>
+    <script type="text/javascript" src="/ift/modules/likedislike/likedislike.js"></script>
+    <script>var base_path = '/'; var module_path = 'sites/all/modules/likedislike';</script>
+    <script type="text/javascript" src="/ift/modules/custom_search/js/custom_search.js"></script>
+
+    <script type="text/javascript" src="/ift/js_injector/js_injector_12.js"></script>
+
+    <script>
+        jQuery(document).ready(function () {
+            jQuery("#search-block-form").hide(); // Oculta el Formulario al cargar la pagina
+            jQuery("#btn_search").attr("href", "http://www.ift.org.mx/search/node");
+            jQuery("#edit-basic").prepend('<label for="edit-keys">Busqueda actual</label>');
+            jQuery("#edit-basic input").attr('readonly', 'true');
+            jQuery("input#edit-filter").removeAttr('readonly');
+
+        });
+    </script>
+
+    <script>
+        jQuery(document).ready(function () {
+            jQuery('.easy-breadcrumb span.active').each(function (index, el) {
+                if (jQuery(this).text() == 'Medios y Contenidos Audiovisuales') {
+                    jQuery(this).css('font-weight', 'inherit');
+                    jQuery(this).css('font-size', '12px');
+                }
+            });
+        })
+
+        jQuery('a[href="/tramites"]').attr("target", "_blank")
+        var url_pathname = jQuery(location).attr('pathname');
+        var url_tra = url_pathname.split('/');
+        if (url_tra[1] == 'tramites') {
+            window.location = 'http://inventariotramites.ift.org.mx/mitweb/#!/';
+        }
+    </script>
+    <script src="/ift/jqe.js"></script>
+
+    <script>
+        $ = jQuery;
+    </script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.css" />
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.20/datatables.min.js"></script>
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.19/datatables.min.js"></script>
+
+    <script type="text/javascript" src="/js/moment.js"></script>
+
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js"></script>
+
+    @RenderSection("head", required: false)
+
+    <style>
+        
+
+        .container {
+            width: 100%;
+        }
+    </style>
+    </style>
+
+</head>
+<body class="html front not-logged-in no-sidebars page-inicio">
+    <div class="" id="skip-nav">
+        <strong>Atajo de Navegación:</strong>
+        <ul>
+            <li><a class="" href="#content" title="Saltar al contenido principal">Saltar al contenido principal</a></li>
+        </ul>
+    </div>
+
+    <h1 class="HideByHearColores">Instituto Federal de Telecomunicaciones</h1>
+    <header id="navbar" role="banner" class="navbar container navbar-default" style="margin-bottom: 0px;">
+
+        <div class="container" style="padding: 0;border-bottom: 3px solid #cd9900;">
+
+            <div class="navbar-header" style="height: 110px;">
+                <a class="navbar-brand paddingLeftLogo100" href="/">
+                    <img class="img-responsive" src="/img/logo-perc-borde-blanco-300x204.png" alt="Instituto Federal de Telecomunicaciones" style="height: 100px;">
+                </a>
+            </div>
+
+            <div class="greenOption">
+                <div class="">
+                    <span id="titlePage" class="h2 ColorFFF" style="font-size: 21px;">GRUPO PERC</span>
+                    <br>
+                    <span id="titlePage" class="h2 ColorFFF" style="font-size: 16px;">¿QUIÉNES SOMOS?</span>
+                    <br><br>
+                        <span id="descriptionPage" class="ColorFFF" style="font-size: 14px;">
+                            Somos una empresa mexicana dedicada al suministro de energéticos, fundada en 1978 bajo un esquema orientado a la ecología y productividad.
+                        </span>
+                </div>
+            </div>
+
+        </div>
+
+    </header>
+
+    <div id="content" class="main-container container">
+        <!-- CONTENT -->
+        <div class="row BackgroundContainerF0F1F6">
+            <nav class="navbar navbar-default sub-navbar">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#subenlaces" aria-expanded="true">
+                            <span class="sr-only">Interruptor de Navegación</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="/" style="padding-left: 30px; padding-top: 12px;">@ViewBag.Title</a>
+                    </div>
+                    <div class="navbar-collapse collapse in" id="subenlaces" style="border-bottom: 1px solid lightgray;" aria-expanded="true">
+                        <ul class="nav navbar-nav navbar-right">
+
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Bandejas <em id="sobre" class="fa fa-envelope faa-horizontal animated" style="padding-right: 5px; padding-left: 5px; display: none;"></em><span class="receivedCount"></span><span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    @if (!User.IsInRole("Observador"))
+                                    {
+                                        <li><a href="/Inbox/Received">Bandeja de entrada <span class="badge pull-right receivedCount" style="background-color: #a94442;"></span></a></li>
+                                    }
+                                    <li><a href="/Inbox/ProcedureInProcess">Trámites en proceso <span id="inProcessCount" class="badge pull-right"></span></a></li>
+                                    <li><a href="/Inbox/ProcedureResolved">Trámites resueltos</a></li>
+
+                                    @if (!User.IsInRole("Observador"))
+                                    {
+                                        <li><a href="/Inbox/Draft">Borradores</a></li>
+                                    }
+                                </ul>
+                            </li>
+
+                            @if (!User.IsInRole("Observador"))
+                            {
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Opciones <em id="sobre" class="fa fa-envelope faa-horizontal animated" style="display: none;"></em><span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+
+                                        @if (User.IsInRole("Administrator"))
+                                        {
+                                            <li><a href="javascript:void(0);" id="writeNotification">Redactar notificación</a></li>
+                                            <li><a href="/Activity/Question">Descarga de preguntas</a></li>
+                                        }
+                                    </ul>
+                                </li>
+                            }
+
+                            @if (User.IsInRole("Reports"))
+                            {
+                                @Html.Partial("ReportPartial")
+                            }
+
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">@User.Identity.Name <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    @if (User.IsInRole("Administrator"))
+                                    {
+                                        <li><a href="/Administration/Empleado">Empleados</a></li>
+                                        <li><a href="/Administration/UnidadOrganizacional">Unidades organizacionales</a></li>
+                                        <li><a href="/Administration/Transfer">Tranferencia de actividades</a></li>
+                                        <li><a href="/Administration/Calendario">Calendario</a></li>
+                                    }
+
+                                    @if (User.IsInRole("Repository"))
+                                    {
+                                        <li><a href="/Repository/Search">Repositorio</a></li>
+                                    }
+
+                                    @if (User.IsInRole("Binnacle"))
+                                    {
+                                        <li><a href="/Binnacle/Search">Bitácora</a></li>
+                                    }
+                                    <li><a href="/Account/Logout">Salir</a></li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <section class="col-sm-12" style="overflow-x: auto; white-space: nowrap;">
+                <section id="contenido-principal-ift">
+                    <div class="region region-content">
+                        <section id="block-system-main" class="block block-system clearfix">
+
+                            <div class="panel-display pond clearfix radix-pond" style="padding-top: 20px;">
+
+                                <div class="container-fluid">
+
+                                    @RenderBody()
+
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </section>
+        </div>
+        <!-- END CONTENT -->
+    </div>
+
+    <!-- FOOTER -->
+    <div class="row PaddingTop25" style="padding-top: 0px !important;">
+        <div class="container">
+            <div class="container" style="border-top: 3px solid #cd9900;">
+                <div class="row footerBelow t7">
+                    <div class="col-md-6">
+                        <em class="fa fa-copyright"></em>2013 Undani - Algunos Derechos Reservados
+                    </div>
+                    <div class="col-md-offset-2 col-md-4 text-right">
+                        Teléfono: 55 2727 5798
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END FOOTER -->
+
+    <script src="/js/main.js?v=1.0.1"></script>
+
+    @RenderSection("script", required: false)
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#writeNotification').click(function () {
+                $.ajax({
+                    cache: false,
+                    url: '/Tracking/ProcedureInstance/Create',
+                    data: { procedureRefId: '6CC6CB7C-94CF-4A26-96D3-3CA4DC513B54', procedureInstanceKey: '' },
+                    dataType: 'json'
+
+                })
+                    .done(function (response) {
+                        window.location.href = '/Activity/Internal?elementInstanceRefId=' + response.elementInstanceRefId + "&returnUrl=/Inbox/Draft";
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        alert("Ocurrió un error, intente de nuevo.")
+                    });
+            });
+        });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+﻿@{
+    ViewBag.Title = "Buscar en la bitácora";
+
+    IConfiguration configuration = ViewBag.Configuration;
+}
+
+@section head{
+    <link rel="stylesheet" href="~/plugins/tableexport/css/tableexport.min.css">
+
+    <script type="text/javascript" src="~/plugins/tableexport/js/xlsx.core.min.js"></script>
+    <script type="text/javascript" src="~/plugins/tableexport/js/Blob.js"></script>
+    <script type="text/javascript" src="~/plugins/tableexport/js/FileSaver.js"></script>
+    <script type="text/javascript" src="~/plugins/tableexport/js/tableexport.min.js"></script>
+}
+
+
+<form id="frmBuscar">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="control-label">Nombre, denominación o razon social:</label>
+                <input id="nombre" type="text" class="form-control dth" maxlength="250" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">RFC:</label>
+                <input id="rfc" type="text" class="form-control dth" maxlength="13" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">Folio:</label>
+                <input id="folio" type="text" class="form-control dth" maxlength="10" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <button id="searchProcedures" type="button" class="btn btn-primary" title="guardar los cambios"><i class="fa fa-search fa-right-space"></i>Buscar</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <table id="dtuProceduresInProcess" class="table table-hover table-stripped table-bordered">
+            <thead class="no-border">
+                <tr>
+                    <th>Folio</th>
+                    <th>Asunto</th>
+                    <th>Inició</th>
+                    <th>Terminó</th>
+                </tr>
+            </thead>
+            <tbody class="no-border-x hover">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="divModalActivities" class="modal fade" role="dialog" style="overflow-y: scroll;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Trámite: <span id="ProcedureKey"></span></h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="dtuActivities" class="table table-stripped table-bordered">
+                                <thead>
+                                    <tr role="row">
+                                        <th></th>
+                                        <th>Actividad</th>
+                                        <th>Responsable</th>
+                                        <th>Inició</th>
+                                        <th>Terminó</th>
+                                        <th>Duración</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section script{
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/plugins/date.format/date.format.js"></script>
+    <script src="/js/binnacle/search.js?v=1.0.2" type="text/javascript"></script>
+}

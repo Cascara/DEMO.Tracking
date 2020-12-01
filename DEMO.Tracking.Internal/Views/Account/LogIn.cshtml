@@ -1,0 +1,119 @@
+﻿@model DEMO.Tracking.Internal.Model.LoginViewModel
+@{
+    Layout = "_Layout_External";
+}
+
+<div class="row" style="padding-left:20px;padding-right:20px;">
+    <div class="col-md-6 radix-layouts-column1 panel-panel">
+        <div class="panel-panel-inner">
+            <div class="panel-separator"></div>
+            <div class="panel-pane pane-block">
+                <div class="pane-content">
+                    <div class="view view-view-listado-sesiones-del-pleno view-id-view_listado_sesiones_del_pleno view-display-id-block view-dom-id-0071ca669da3de74fa043e77269c387a">
+                        <div class="view-content">
+                            <div class="list-group-item sesion-pleno">
+                                <div class="row">
+                                    <div class="col-xs-12 text-left PaddingTop18">
+                                        <em class="fa fa-angle-double-right text-muted1"></em>
+                                        <a href="" target="_blank">Manual de usuario</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-item sesion-pleno">
+                                <div class="row">
+                                    <div class="col-xs-12 text-left PaddingTop18">
+                                        <em class="fa fa-angle-double-right text-muted1"></em>
+                                        <a href="http://www.grupoperc.com" target="_blank">Portal de Internet</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 radix-layouts-column1 panel-panel">
+        <div class="panel-separator"></div>
+        <div class="panel-pane pane-block">
+            <div class="pane-content">
+
+                <form action="/Account/Login" method="post" id="form-login" role="form" class="form-horizontal">
+
+                    <h4>Ingresa con tu correo electrónico y contraseña.</h4>
+                    <br />
+                    <div id="altError" class="alert alert-danger" style="display: none;">
+                        <strong>¡Importante!</strong>
+                        <input name="ReturnUrl" type="hidden" asp-for="ReturnUrl" value="@Context.Request.Query["ReturnUrl"]" />
+                        <input name="Error" type="hidden" asp-for="Error" value="0" />
+                        <span id="msgError"></span>
+                        <div name="Description" type="text" asp-for="Description">&nbsp;</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="Email">Correo electrónico<span class="form-text form-text-error hidden" rel="Email">*</span>:</label>
+                        <div class="col-sm-8">
+                            <input id="Username" name="Username" type="text" asp-for="Username" placeholder="Correo electrónico" class="form-control" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="Password">Contraseña<span class="form-text form-text-error hidden" rel="Password">*</span>:</label>
+                        <div class="col-sm-8">
+                            <input id="Password" name="Password" type="password" asp-for="Password" placeholder="Contraseña" class="form-control" required />
+                        </div>
+                    </div>
+                    <button id="login" type="button" name="button" value="login" class="btn btn-primary pull-right">Iniciar sesión</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#login').click(function () {
+                $('#login').attr('disabled', 'disabled');
+
+                $('#login').removeClass('btn-success');
+                $('#login').addClass('btn-warning');
+                document.getElementById('login').innerHTML = '<i class="fa fa-spinner faa-spin animated" style="display: none;"></i> Iniciando, espere un momento...';
+
+                var formData = new FormData();
+
+                formData.append("userName", $('#Username').val());
+                formData.append("password", $('#Password').val());
+
+                $.ajax({
+                    cache: false,
+                    url: "/Account/SignIn",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    enctype: 'multipart/form-data',
+                    type: 'POST',
+                    timeout: 1280000
+                })
+                    .done(function (response) {
+                        if (response !== '') {
+                            $('#login').removeAttr('disabled');
+
+                            $('#login').removeClass('btn-warning');
+                            $('#login').addClass('btn-success');
+                            document.getElementById('login').innerHTML = 'Iniciar sesión';
+
+                            alert(response);
+                        } else {
+                            $('#form-login').submit();
+                        }
+                    });
+            });
+        });
+    </script>
+}
+
+
+
+
+
+

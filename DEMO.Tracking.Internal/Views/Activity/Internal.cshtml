@@ -1,0 +1,311 @@
+﻿@{
+    Layout = "_Layout_Activity";
+
+    User user = ViewBag.User;
+
+    IConfiguration configuration = ViewBag.Configuration;
+
+    ActivityInstance activityInstance = ViewBag.ActivityInstance;
+
+    string formInstanceHtml = ViewBag.FormInstanceHtml;
+
+    ViewBag.Title = activityInstance.Name;
+
+    BusinessRule businessRule;
+    DateTime fechaFinal = DateTime.Now;
+    Boolean permiteFirmar = true;
+
+    switch (activityInstance.CatalogId)
+    {
+        case "LIC_IFT8_07.0": // Firmar prevencion
+
+            businessRule = new CustomCall(configuration, null).GetBusinessRule("BR2007", "{}");
+
+            fechaFinal = (DateTime)businessRule.Result;
+
+            if (DateTime.Now > fechaFinal)
+                permiteFirmar = false;
+
+            break;
+
+        case "LIC_IFT8_08.0": // Firmar el Dictamen
+
+            businessRule = new CustomCall(configuration, null).GetBusinessRule("BR2011", "{}");
+
+            fechaFinal = (DateTime)businessRule.Result;
+
+            if (DateTime.Now > fechaFinal)
+                permiteFirmar = false;
+
+            break;
+    }
+
+
+}
+
+@section head{
+    <link href="@configuration["WebFramework"]/undani/plugins/quickview/quickview.css?v=0.0.2" rel="stylesheet" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var form = $('#form').uForm();
+
+            $.jsonPreload =
+            {
+                configurationForm: @Html.Raw(configuration["ConfigurationForm"]),
+                Preload: 1,
+                ObjectJson: {},
+                Activity: @Html.Raw(ViewBag.JsonActivityInstance),
+            };
+
+            $('#save').click(function () {
+                form.save();
+            });
+
+            $.SaveBeforeSignOut = function () {
+                if (document.getElementById('save')) {
+                    form.save();
+                    setInterval(function () {
+                        window.location.href = "/Account/SignOut";
+                    }, 10000);
+                } else {
+                    window.location.href = "/Account/SignOut";
+                }
+            }
+
+            $('#close').click(function () {
+                window.location.href = "/";
+            });
+
+            $("div.actions").on("click", ".action", function () {
+
+                $.ActionSelected = $(this).attr('id');
+
+                $(this).attr('disabled', true);
+                $('#save').attr('disabled', true);
+
+                if (parseInt($(this).attr('data-mode')) !== 0) {
+                    var form = new FormData();
+                    form.append("inputValue", "");
+
+                    var settings = {
+                        "url": "/BusinessRule?key=" + $(this).attr('data-br-key'),
+                        "method": "POST",
+                        "timeout": 0,
+                        "processData": false,
+                        "mimeType": "multipart/form-data",
+                        "contentType": false,
+                        "data": form
+                    };
+
+                    $.ajax(settings).done(function (response) {
+                        var response = JSON.parse(response);
+                        var brFecha = new Date(response.result);
+                        var nowfecha = new Date($.now());
+
+                        var settings = JSON.parse(response.additionalSettings);
+                        settings.Message = settings.Message.replace('{{brDateTime}}', response.content);
+
+                        settings.Message = settings.Message.replace('{{fechaFinal}}', '@fechaFinal.ToString("dd/MM/yyyy hh:mm")');
+
+                        if (parseInt($(this).attr('data-mode')) === 1) {
+                            if (nowfecha < brFecha) {
+                                alert(settings.Message);
+                            } else {
+                                ExecuteAction();
+                            }
+                        } else {
+                            if (nowfecha > brFecha) {
+                                ExecuteAction();
+                            } else {
+                                alert(settings.Message);
+                            }
+                        }
+                    });
+                } else {
+                    ExecuteAction();
+                }
+            });
+
+            @if (permiteFirmar) {
+                <text>
+
+                function ExecuteAction() {
+                    if ($('#cbxtxt_eFirma').length > 0) {
+                        if ($("#cbxtxt_eFirma").prop('checked')) {
+                            $('#' + $.ActionSelected).attr('data-signature-type', 'Form');
+                        } else {
+                            $('#' + $.ActionSelected).attr('data-signature-type', '');
+                        }
+                    }
+
+                    if ($('#' + $.ActionSelected).attr('data-signature-type') === 'Form') {
+                        if ($.jsonPreload.Activity.formReadOnly === true)
+                            $("#signature").modal('show');
+                        else
+                            form.send();
+                    }
+                    else {
+                        if ($.jsonPreload.Activity.formReadOnly === true === 'true') {
+                            var r = confirm('¿Está seguro que desea ' + $('#' + $.ActionSelected).attr('title') + '?');
+                            if (r == true) {
+                                $.FinalExecution();
+                            }
+                            else {
+                                $('#' + $.ActionSelected).attr('disabled', false);
+                                $('#save').attr('disabled', false);
+                            }
+                        }
+                        else
+                            form.send();
+                    }
+                }
+
+                </text>
+            }
+            else {
+                <text>
+
+                function ExecuteAction() {
+                    alert('Lo sentimos, el periodo de firma terminó el @fechaFinal.ToString("dd/MM/yyyy hh:mm") hrs.');
+                    window.location.href = "/";
+                }
+
+                </text>
+            }
+
+            $(form).on('form_error', function (event, jqXHR, textStatus, errorThrown) {
+                $("html, body").animate({ scrollTop: 0 }, "slow");
+                    });
+
+            $(form).on('send_completed', function (event, jqXHR, textStatus, errorThrown) {
+                        var actionSelected = $('#' + $.ActionSelected);
+
+                        if (actionSelected.attr('data-signature-type') === 'Form')
+                    $("#signature").modal('show');
+                else {
+                            var r = confirm('¿Está seguro que desea ' + actionSelected.attr('title') + '?');
+                            if (r == true) {
+                        $.FinalExecution();
+                            } else {
+                                actionSelected.attr('disabled', false);
+                            }
+                        }
+                    });
+
+            $(form).on('get_finished', function (event) {
+                $("#divMainContainer").show();
+                    });
+
+            $(form).on('loaded', function (event, init) {
+                        init ? init($.jsonPreload) : form.initialize($.jsonPreload);
+                    });
+
+            $(form).on('validate_result', function (event, valido) {
+                        if (!valido)
+                    $('#' + $.ActionSelected).attr('disabled', false);
+                    });
+
+                    // Placeholders
+                    var setPlaceHolder = function () {
+                var inputs = document.querySelectorAll("input[type=text]");
+                    var index;
+                for (index = 0; index < inputs.length; ++index) {
+                    if (inputs[index].placeholder === '') {
+                        var texto = $('#' + inputs[index].id).closest('.form-group').find('label[class=control-label]')
+                            .text();
+                    texto = texto.replace('*', '').replace(':', '').toLowerCase();
+                    inputs[index].placeholder = 'Ingresa ' + texto;
+                    }
+            }
+            };
+
+            setPlaceHolder();
+        });
+    </script>
+}
+
+@section option{
+    <li><a href="javascript:void(0);" data-toggle="quickview" data-toggle-element="#quickview">Ver comentarios <i id="commentsAlert" class="fa fa-comment faa-tada animated" style="padding-left: 5px; display: none;"></i></a></li>
+}
+
+@Html.Partial("ConversationPartial")
+
+
+@Html.Partial("SignPartialDemo")
+
+<!-- START FORM -->
+@Html.Raw(formInstanceHtml)
+<!-- END FORM -->
+
+<div class="col-sm-12 " style="padding-bottom:20px;">
+    <div class="actions pull-right">
+
+        <!-- START ACTIONS -->
+        @foreach (ActionButton actionButton in activityInstance.ActionButtons)
+        {
+            <button id="@actionButton.RefId" type="button" class="btn @actionButton.Color action" data-br-key="@actionButton.BusinessRuleKey" data-mode="@actionButton.Mode" style="@(activityInstance.ActionButtonsDisabled ? "display:none" : "")" data-signature-type="@actionButton.SignatureType" title="@actionButton.Description"><i class="fa @actionButton.Icon fa-right-space" style="padding-right: 5px;"></i>@actionButton.Name</button>
+        }
+        <!-- END ACTIONS -->
+
+        @if (activityInstance.ActionButtons.Count > 0)
+        {
+            <button id="save" type="button" class="btn btn-primary" title="guardar los cambios" style="@(activityInstance.FormReadOnly ? "display:none;":"")"><i class="fa fa-save fa-right-space" style="padding-right: 5px;"></i>Guardar</button>
+        }
+
+        <button id="close" type="button" class="btn btn-default" title="cerrar la actividad">Cerrar</button>
+    </div>
+</div>
+
+@section script{
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/plugins/date.format/date.format.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("button.action[data-key*='AlwaysOn']").css('display', '');
+
+            $.EnableActionButton = function (id) {
+                if (typeof id === "undefined")
+                    id = '';
+                if ($.jsonPreload.Activity.actionButtonsDisabled === true) {
+                    $('button.action').css('display', 'none');
+                    $("button.action[data-key*='AlwaysOn']").css('display', '');
+                    if (id !== '') {
+                        var o;
+                        for (var i = 0; i < $('button.action').length; i++) {
+                            o = $('button.action')[i];
+                            if ($(o).attr('data-key').indexOf(id) >= 0) {
+                                $(o).css('display', '');
+                            }
+                        }
+                    }
+                }
+            };
+
+            @Html.Raw(activityInstance.BeforeSignScript)
+
+            $.FinalExecution = function () {
+                $.ajax({
+                    cache: false,
+                    dataType: 'json',
+                    type: 'GET',
+                    data: {
+                        actionRefId: $.ActionSelected,
+                        elementInstanceRefId: $.jsonPreload.Activity.refId
+                    },
+                    url: '/Tracking/ActionInstance/Execute'
+                })
+                    .done(function (result) {
+                        if (result === true) {
+                            window.location.href = "@Context.Request.Query["returnUrl"]";
+                        }
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        //alert(errorThrown);
+                    })
+                    .always(function () {
+                        $('#signature').modal('hide');
+                        window.location.href = "@Context.Request.Query["returnUrl"]";
+                    });
+            };
+        });
+    </script>
+}

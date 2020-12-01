@@ -1,0 +1,119 @@
+﻿
+@{
+    ViewBag.Title = "Documentos del trámite";
+
+    IConfiguration configuration = ViewBag.Configuration;
+
+    List<UserSummary> users = ViewBag.Users;
+}
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="form-group">
+            <label>Trámite:</label>
+            <select id="rolId" class="form-control">
+                <option value="0">Solicitud de afiliación de centros de trabajo y sucursales del sector privado</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div>
+    <h4>Documentos</h4>
+    <hr class="red">
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <table id="dtuDocuments" class="table table-hover table-stripped table-bordered">
+            <thead class="no-border">
+                <tr>
+                    <th>Documento</th>
+                    <th>Tipo</th>
+                    <th>Agrupador</th>
+                </tr>
+            </thead>
+            <tbody class="no-border-x hover">
+                <tr><td style='font-weight: bold;'>Acta constitutiva</td><td>Documento Legal</td><td>Empresa.DocumentosLegales</td></tr>
+                <tr><td style='font-weight: bold;'>RFC</td><td>Documento Legal</td><td>Empresa.DocumentosLegales</td></tr>
+                <tr><td style='font-weight: bold;'>Pasaporte</td><td>Identificación Oficial</td><td>Empresa.DocumentosLegales</td></tr>
+                <tr><td style='font-weight: bold;'>INE</td><td>Identificación Oficial</td><td>Interesado.Documentos</td></tr>
+                <tr><td style='font-weight: bold;'>CURP</td><td>Identificación Oficial</td><td>Interesado.Documentos</td></tr>
+                <tr><td style='font-weight: bold;'>RFC</td><td>Identificación Oficial</td><td>Interesado.Documentos</td></tr>
+                <tr><td style='font-weight: bold;'>INE</td><td>Identificación Oficial</td><td>Representante.DocumentosPersonales</td></tr>
+                <tr><td style='font-weight: bold;'>CURP</td><td>Identificación Oficial</td><td>Representante.DocumentosPersonales</td></tr>
+                <tr><td style='font-weight: bold;'>RFC</td><td>Identificación Oficial</td><td>Representante.DocumentosPersonales</td></tr>
+                <tr><td style='font-weight: bold;'>Poder notarial</td><td>Documento Legal</td><td>Representante.DocumentosLegales</td></tr>
+                <tr><td style='font-weight: bold;'>INE</td><td>Identificación Oficial</td><td>Representante.DocumentosLegales</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="divModalDocument" class="modal fade" role="dialog" style="overflow-y: scroll;" data-backdrop="static" data-keyboard="false" data-uo-id="">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Documento</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Documento:</label>
+                            <input id="dName" type="text" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Tipo:</label>
+                            <select id="dType" class="form-control">
+                                <option value="0">Seleccione una opción...</option>
+                                <option value="Comprobante de domicilio">Comprobante de domicilio</option>
+                                <option value="Comprobante de domicilio fiscal">Comprobante de domicilio fiscal</option>
+                                <option value="Documento Legal">Documento Legal</option>
+                                <option value="Identificación Oficial">Identificación Oficial</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Permite documentos adicionales:</label>
+                            <select id="dAditional" class="form-control">
+                                <option value="0">No</option>
+                                <option value="1">Si</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Agrupador:</label>
+                            <input id="dGrouper" type="text" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="deleteDocument" type="button" class="btn btn-danger"><i class="icon icon-disk"></i> Eliminar</button>
+                <button type="button" class="btn btn-success"><i class="icon icon-disk"></i> Guardar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script{
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/plugins/date.format/date.format.js"></script>
+    <script src="~/js/administration/documentprocedure.js" type="text/javascript"></script>
+}

@@ -1,0 +1,224 @@
+.divBackground{
+    /*padding:5px;*/
+    border: 1px solid #a7a9ac;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background:url(/sites/default/files/Slider_Background.png);
+}
+.panelImgContent{
+    /*padding: 10px 10px;*/
+    margin-left:-30px;
+}
+.sliderSection{
+    display:none;
+}
+@media(max-width:992px){
+    .panelImgContent{
+    margin-right: -30px;
+}
+    
+}
+.panelTitle h2 {
+ font-weight: bold !important;
+}
+@media(min-width:1200px){
+    .panelTitle{
+ padding-top:45px;    
+}
+}
+@media(max-width:992px){
+.panelTitle{
+ display:none;    
+}
+}
+.sliderImg div img{
+    
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    /*-webkit-box-shadow: 0px 0px 3px 3px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 0px 3px 3px rgba(0,0,0,0.3);
+    box-shadow: 0px 0px 3px 3px rgba(0,0,0,0.3);*/
+}
+
+
+.panelControls{
+    /*padding:30px;*/
+    padding: 30px;
+    float: right;
+    position: absolute;
+    right: -50px;
+    width: 400px;
+    text-align: right;
+    bottom: -265px;
+    z-index: 1;
+}
+
+@media(max-width:1200px){
+    .panelControls{
+        float: right;
+        margin-left: 100px;
+        bottom: -255px;
+		z-index: 1;
+    }
+}
+@media(max-width:992px){
+    .panelControls{
+        float: none;
+        margin-top:0px;
+        position: static;
+        margin-left: 280px;
+		z-index: 1;
+    }
+}
+@media(max-width:768px){
+    .panelControls{
+        float: none;
+        margin-left: 0px;
+        margin-top: -20px;
+        right: 0px;
+        width: 100%;
+        bottom: 0px;
+        position: static;
+		z-index: 1;
+    }
+}
+@media(max-width:480px){
+    .panelControls{
+        float: none;
+        margin-left: 0px;
+        margin-top: 0px;
+        padding:0px;
+        position: static
+		z-index: 1;
+    }
+}
+.panelPlayPause{
+    width:45px;
+    font-size:14px;
+    padding-top: 10px;
+}
+
+
+.panelNumbers{
+    padding:10px;
+    cursor:pointer;
+}
+@media(max-width:992px){
+    .panelNumbers{
+    padding:10px;
+    margin-top:-30px;
+}
+    .panelPlayPause{
+    margin-top: -15px;
+    padding-top: 0px;
+}
+}
+@media(max-width:480px){
+    .panelPlayPause{
+    padding-top: 0px;
+    margin-top:-18px;
+}
+}
+.panelNumbers .unselected{
+    background-color:rgba(0,0,0,0.7);
+    color:#CCC;
+    padding:2px 9px;
+    font-size:20px;
+    -webkit-border-radius: 40px;
+    -moz-border-radius: 40px;
+    border-radius: 40px;
+}
+.panelNumbers .selected{
+    /*background-color:rgba(92,145,50,0.7);*/
+    background-color:rgba(0,0,0,0.8);
+    color:#FFF;
+    padding:5px 12px;
+    font-size:24px;
+    -webkit-border-radius: 40px;
+    -moz-border-radius: 40px;
+    border-radius: 40px;
+    /*font-weight:bold;*/
+}
+
+.shadow{
+    background-color:rgba(0,0,0,0.7);
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+    /*padding: 4px 6px 4px 5px;*/
+    padding: 8px 10px 8px 10px;
+}
+
+@media(max-width:480px){
+    .panelNumbers .unselected{
+        font-size:16px;
+    }
+    .panelNumbers .selected{
+        font-size:24px;
+    }
+}
+.panelNotFloatSlideText{
+    padding:15px;
+    display:none;
+    color:#FFF;
+    background-color:#efbb20;
+    opacity:0.95;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    line-height: 1.5;
+    vertical-align:middle;
+}
+.panelNotFloatSlideText > h2 > a{
+    color:#FFF !important;
+}
+.panelFloatSlideText{
+    bottom:-20px; 
+    right:-370px; 
+    padding:15px;
+    width:450px; 
+    height:150px; 
+    /*margin-left:600px; */
+    position:absolute;
+    color:#FFF;
+    background-color:#2d5c27;
+    opacity:0.90;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    line-height: 1.5;
+    vertical-align:middle;
+}
+.panelFloatSlideText div{
+     position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+}
+.panelFloatSlideText h2 a{
+    color:#FFF;
+}
+@media(max-width:1200px){
+    .panelFloatSlideText{
+    /*display:none;*/
+    right:-313px; 
+    }
+}
+@media(max-width:992px){
+    .panelFloatSlideText{
+    /*display:none;*/
+    right: 15px; 
+    }
+}
+@media(max-width:768px){
+    .panelFloatSlideText, .imgSliderInner a img{
+    display:none;
+    }
+    .panelNotFloatSlideText{
+    display:block;
+}
+
+}

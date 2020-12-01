@@ -1,0 +1,99 @@
+﻿@{
+    ViewBag.Title = "Empleado";
+
+    List<Empleado> empleados = ViewBag.Empleados;
+    IConfiguration configuration = ViewBag.Configuration;
+
+    List<UserSummary> users = ViewBag.Users;
+}
+
+@section head{
+    <script type="text/javascript">
+        var empleados = @Html.Raw(JsonConvert.SerializeObject(empleados, new JsonSerializerSettings() { ContractResolver = new CamelCasePropertyNamesContractResolver() }));
+    </script>
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <table id="dtuEmpleados" class="table table-hover table-stripped table-bordered">
+            <thead class="no-border">
+                <tr>
+                    <th>Número</th>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>Usuario</th>
+                    <th>RFC</th>
+                </tr>
+            </thead>
+            <tbody class="no-border-x hover">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="divModalEmpleado" class="modal fade" role="dialog" style="overflow-y: scroll;" data-backdrop="static" data-keyboard="false" data-user-id="00000000-0000-0000-0000-000000000000">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Empleado</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Número:</label>
+                            <input id="eNumero" type="number" min="1" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Nombre:</label>
+                            <input id="eNombre" type="text" maxlength="100" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Apellidos:</label>
+                            <input id="eApellidos" type="text" maxlength="100" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Usuario:</label>
+                            <input id="eUserName" type="text" maxlength="256" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>RFC:</label>
+                            <input id="eRFC" type="text" maxlength="13" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="save" type="button" class="btn btn-success"><i class="icon icon-disk"></i> Guardar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script{
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/plugins/date.format/date.format.js"></script>
+    <script src="~/js/administration/empleado.js?v=1.0.0" type="text/javascript"></script>
+}

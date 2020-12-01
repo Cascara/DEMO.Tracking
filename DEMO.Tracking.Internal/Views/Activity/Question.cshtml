@@ -1,0 +1,85 @@
+﻿@{
+    Layout = "_Layout_Activity";
+
+    User user = ViewBag.User;
+
+    IConfiguration configuration = ViewBag.Configuration;
+
+    string formInstanceHtml = ViewBag.FormInstanceHtml;
+
+    ViewBag.Title = "Preguntas";
+}
+
+@section head{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var form = $('#form').uForm();
+
+            $.jsonPreload =
+            {
+                configurationForm: @Html.Raw(configuration["ConfigurationForm"]),
+                Preload: 1,
+                ObjectJson: {},
+                Activity: {
+                    flowInstanceSummary: {
+                        procedureInstanceSummary: {
+                        }
+                    }
+                }
+            };
+
+
+            $('#close').click(function () {
+                window.location.href = "/";
+            });
+
+            $(form).on('form_error', function (event, jqXHR, textStatus, errorThrown) {
+                $("html, body").animate({ scrollTop: 0 }, "slow");
+            });
+
+
+            $(form).on('get_finished', function (event) {
+                $("#divMainContainer").show();
+            });
+
+            $(form).on('loaded', function (event, init) {
+                init ? init($.jsonPreload) : form.initialize($.jsonPreload);
+            });
+
+
+            // Placeholders
+            var setPlaceHolder = function () {
+                var inputs = document.querySelectorAll("input[type=text]");
+                var index;
+                for (index = 0; index < inputs.length; ++index) {
+                    if (inputs[index].placeholder === '') {
+                        var texto = $('#' + inputs[index].id).closest('.form-group').find('label[class=control-label]')
+                            .text();
+                        texto = texto.replace('*', '').replace(':', '').toLowerCase();
+                        inputs[index].placeholder = 'Ingresa ' + texto;
+                    }
+                }
+            };
+
+            setPlaceHolder();
+        });
+    </script>
+}
+
+@*@section option{
+    <li><a href="javascript:void(0);" data-toggle="quickview" data-toggle-element="#quickview">Ver comentarios <i id="commentsAlert" class="fa fa-comment faa-tada animated" style="padding-left: 5px; display: none;"></i></a></li>
+}*@
+
+<!-- START FORM -->
+@Html.Raw(formInstanceHtml)
+<!-- END FORM -->
+
+<div class="col-sm-12 " style="padding-bottom:20px;">
+    <div class="actions pull-right">
+        <button id="close" type="button" class="btn btn-default" title="cerrar la actividad">Cerrar</button>
+    </div>
+</div>
+
+@section script{
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/plugins/date.format/date.format.js"></script>
+}

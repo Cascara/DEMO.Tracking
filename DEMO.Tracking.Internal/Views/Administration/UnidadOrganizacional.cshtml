@@ -1,0 +1,137 @@
+﻿@{
+    ViewBag.Title = "Unidad Organizacional";
+
+    List<UnidadOrganizacionalSummary> unidadesOrganizacionales = ViewBag.UnidadesOrganizacionales;
+    IConfiguration configuration = ViewBag.Configuration;
+
+    List<Empleado> empleados = ViewBag.Empleados;
+}
+
+@section head{
+    <script type="text/javascript">
+        var unidadesOrganizacionales = @Html.Raw(JsonConvert.SerializeObject(unidadesOrganizacionales, new JsonSerializerSettings() { ContractResolver = new CamelCasePropertyNamesContractResolver() }));
+    </script>
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <table id="dtuUnidadesOrganizacionales" class="table table-hover table-stripped table-bordered">
+            <thead class="no-border">
+                <tr>
+                    <th>Número</th>
+                    <th>Nombre</th>
+                    <th>Empleados</th>
+                </tr>
+            </thead>
+            <tbody class="no-border-x hover">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="divModalUnidadOrganizacional" class="modal fade" role="dialog" style="overflow-y: scroll;" data-backdrop="static" data-keyboard="false" data-uo-id="0">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Unidad Organizacional</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Número:</label>
+                            <input id="ouNumero" type="text" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Nombre:</label>
+                            <input id="ouNombre" type="text" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="divEmpleados">
+                    <h4>Empleados</h4>
+                    <hr class="red">
+                </div>
+                <div class="row divEmpleados">
+                    <div class="col-md-12">
+                        <table id="dtuEmpleado" class="table table-stripped table-bordered" style="width: 100%;">
+                            <thead>
+                                <tr role="row">
+                                    <th>Número</th>
+                                    <th>Nombre</th>
+                                    <th>Rol</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="saveUnidad" type="button" class="btn btn-success"><i class="icon icon-disk"></i> Guardar</button>
+                <button id="closeUnidad" type="button" class="btn btn-default">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="divModalEmpleado" class="modal fade" role="dialog" style="overflow-y: scroll;" data-backdrop="static" data-keyboard="false" data-uo-id="">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Empleado</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Empleado:</label>
+                            <select id="eNombre" class="form-control">
+                                <option value="0">Selecciona un usuario...</option>
+                                @foreach (Empleado empleado in empleados)
+                                {
+                                    <option value="@empleado.Id">@empleado.Nombre @empleado.Apellidos</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Rol:</label>
+                            <select id="rolId" class="form-control">
+                                <option value="0">Seleccione una opción...</option>
+                                <option value="1">Evaluador</option>
+                                <option value="2">Líder</option>
+                                <option value="3">Titular</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button id="deleteEmpleado" type="button" class="btn btn-danger"><i class="icon icon-disk"></i> Eliminar</button>
+                <button id="saveEmpleado" type="button" class="btn btn-success"><i class="icon icon-disk"></i> Guardar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script{
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/plugins/date.format/date.format.js"></script>
+    <script src="~/js/administration/unidadorganizacional.js?v=1.0.0" type="text/javascript"></script>
+}

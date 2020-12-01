@@ -1,0 +1,31 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:4197",
+      "sslPort": 44330
+    }
+  },
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "SYSTEM_FORM": "33A55D31-215C-48A5-8367-3131B4F6572C",
+        "SYSTEM": "926774EB-37AA-43AE-B4A3-7334794B9C4F",
+        "SYSTEM_NAME": "portalinternolocal",
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "OWNER": "BDE3686A-6C0B-4485-A0F8-30F4D3B2A7A7"
+      }
+    },
+    "DEMO.Tracking.Internal": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:5001;http://localhost:5000"
+    }
+  }
+}

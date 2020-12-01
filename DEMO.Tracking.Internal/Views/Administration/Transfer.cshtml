@@ -1,0 +1,159 @@
+﻿@{
+    ViewBag.Title = "Tranferencia de actividades";
+
+    List<ProcedureInstanceSummary> procedures = ViewBag.ToTransfer;
+
+    List<Empleado> empleados = ViewBag.Empleados;
+
+    IConfiguration configuration = ViewBag.Configuration;
+}
+
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#tab-01">Tranferir por trámite</a></li>
+    <li><a data-toggle="tab" href="#tab-02">Tranferir todos los trámites</a></li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane active" id="tab-01">
+        <div class="row">
+            <div class="col-sm-12" style="margin-top: 20px;">
+                <table id="dtuProceduresInProcess" class="table table-hover table-stripped table-bordered">
+                    <thead class="no-border">
+                        <tr>
+                            <th style="width: 70px;">Folio</th>
+                            <th>Asunto</th>
+                            <th style="width: 100px;">Inició</th>
+                        </tr>
+                    </thead>
+                    <tbody class="no-border-x hover">
+                        @if (procedures.Count > 0)
+                        {
+                            @foreach (ProcedureInstanceSummary procedure in procedures)
+                            {
+                                <tr class="inprocess" style="cursor: pointer;" data-procedure-ref-id="@procedure.RefId" data-procedure-key="@procedure.Key">
+                                    <td><strong>@procedure.Key</strong></td>
+                                    <td>
+                                        <strong>@procedure.Name</strong><br />
+                                        @if (procedure.Content.RazonSocial == "")
+                                        {
+                                            <span>@procedure.Content.Nombre @procedure.Content.PrimerApellido @procedure.Content.SegundoApellido</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@procedure.Content.RazonSocial</span>
+                                        }
+                                        <br />
+                                        <span>@procedure.Content.RFC</span>
+                                    </td>
+                                    <td>@procedure.Start.ToString("dd/MM/yyyy HH:mm")</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane" id="tab-02">
+        <form>
+            <div class="row">
+                <div class="col-md-12" style="margin-top: 20px;">
+                    <div class="form-group">
+                        <label class="control-label">Evaluador original:<span class="form-text">*</span></label>
+                        <select id="source" class="form-control">
+                            <option value="">Selecciona un evaluador...</option>
+                            @foreach (Empleado empleado in empleados)
+                            {
+                                <option value="@empleado.UserId">@empleado.Apellidos @empleado.Nombre</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label">Evaluador destinatario:<span class="form-text">*</span></label>
+                        <select id="destiny" class="form-control">
+                            <option value="">Selecciona un avaluador...</option>
+                            @foreach (Empleado empleado in empleados)
+                            {
+                                <option value="@empleado.UserId">@empleado.Apellidos @empleado.Nombre</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 ">
+                    <div class="pull-right">
+                        <button id="transferAll" type="button" class="btn btn-success" title="Tranferir"><i class="fa fa-user fa-right-space"></i><i class="fa fa-arrow-right faa-passing animated animated fa-right-space"></i><i class="fa fa-user fa-right-space"></i>Tranferir todos los trámites</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pull-left text-muted text-vertical-align-button">* Campos obligatorios</div>
+        </form>
+    </div>
+</div>
+
+
+
+<div id="divModalUserSelected" class="modal fade" role="dialog" style="overflow-y: scroll;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Trámite: <span id="ProcedureKey"></span></h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="dtuUserSelected" class="table table-hover table-stripped table-bordered">
+                            <thead>
+                                <tr role="row">
+                                    <th>Rol</th>
+                                    <th>Empleado</th>
+                                </tr>
+                            </thead>
+                            <tbody  class="no-border-x hover"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="transferSelected" class="row" style="display: none;">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>Rol:</label>
+                            <input id="rol" type="text" class="form-control" readonly />
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Evaluador:</label>
+                            <select id="userId" class="form-control">
+                                <option value="">Seleccione un evaluador...</option>
+                                @foreach (Empleado empleado in empleados)
+                                {
+                                    <option value="@empleado.UserId">@empleado.Apellidos @empleado.Nombre</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <button id="transfer" type="button" class="btn btn-success" style="margin-top: 20px; display: none;"><i class="fa fa-arrow-right faa-passing animated animated fa-right-space"></i> Transferir</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">                
+                <button id="closeUserSelected" type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script{
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/plugins/date.format/date.format.js"></script>
+    <script src="~/js/administration/transfer.js?v=1.0.1" type="text/javascript"></script>
+}

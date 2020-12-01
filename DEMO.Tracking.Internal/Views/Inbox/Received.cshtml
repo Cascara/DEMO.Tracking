@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "Bandeja de entrada";
+
+    List<Message> mesagges = ViewBag.Received;
+
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <table id="dtuReceived" class="table table-hover table-stripped table-bordered">
+            <thead class="no-border">
+                <tr>
+                    <th style="width: 50px;"></th>
+                    <th>Folio</th>
+                    <th>Asunto</th>
+                    <th>Inicio</th>
+                    <th style="width: 50px;"></th>
+                </tr>
+            </thead>
+            <tbody class="no-border-x hover">
+                @if (mesagges.Count > 0)
+                {
+                    @foreach (Message message in mesagges)
+                    {
+                        <tr class="received" style="cursor: pointer;" data-message-id="@message.Id">
+                            <td style="text-align: center;"><i class="fa @(message.Viewed ? "fa-envelope-o" : "fa-envelope")"></i></td>
+                            <td>
+                                <strong>@message.ProcedureInstanceKey</strong>
+                            </td>
+                            <td>
+                                <strong>@message.ActivitySubject</strong><br />
+                                <span>@message.ProcedureInstanceContent.UserContent.Interesado</span><br />
+                                <span>@message.ProcedureInstanceContent.UserContent.Folio</span><br />
+                            </td>
+                            <td>@message.Start.ToString("dd/MM/yyyy HH:mm")</td>
+                            @if (message.Status == 0)
+                            {
+                                <td style="text-align: center;"><i class="fa fa-circle" style="color:green"></i></td>
+                            }
+                            else if (message.Status == 1)
+                            {
+                                <td style="text-align: center;"><i class="fa fa-circle" style="color:orange"></i></td>
+                            }
+                            else if (message.Status == 2)
+                            {
+                                <td style="text-align: center;"><i class="fa fa-circle" style="color:red"></i></td>
+                            }
+
+                        </tr>
+                    }
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section script{
+    <script src="~/js/inbox/received.js?v=1.0.4" type="text/javascript"></script>
+}

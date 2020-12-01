@@ -1,0 +1,130 @@
+﻿@{
+    ViewBag.Title = "Buscar en el repositorio";
+
+    IConfiguration configuration = ViewBag.Configuration;
+}
+
+<form id="frmBuscar">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="control-label">Nombre, denominación o razon social:</label>
+                <input id="nombre" type="text" class="form-control dth" maxlength="250" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">RFC:</label>
+                <input id="rfc" type="text" class="form-control dth" maxlength="13" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">Folio:</label>
+                <input id="folio" type="text" class="form-control dth" maxlength="10" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <button id="searchProcedures" type="button" class="btn btn-primary" title="guardar los cambios"><i class="fa fa-search fa-right-space"></i>Buscar</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <table id="dtuProceduresInProcess" class="table table-hover table-stripped table-bordered">
+            <thead class="no-border">
+                <tr>
+                    <th>Nombre</th>
+                    <th>RFC</th>
+                    <th>Folio</th>
+                </tr>
+            </thead>
+            <tbody class="no-border-x hover">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="divModalActivities" class="modal fade" role="dialog" style="overflow-y: scroll;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Trámite: <span id="ProcedureKey"></span></h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="dtuActivities" class="table table-stripped table-bordered">
+                                <thead>
+                                    <tr role="row">
+                                        <th>Clave</th>
+                                        <th>Actividad</th>
+                                        <th>Información</th>
+                                        <th>Documentos</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="divModalDocuments" class="modal fade" role="dialog" style="overflow-y: scroll;" data-backdrop="static" data-keyboard="false" data-apibox="@configuration["ApiBox"]">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Actividad: <span id="ActivityName"></span></h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="dtuDocuments" class="table table-stripped table-bordered">
+                                <thead>
+                                    <tr role="row">
+                                        <th>Nombre</th>
+                                        <th>Tamaño (Kb)</th>
+                                        <th>Cargado</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="descargarzip" type="button" class="btn btn-primary pull-left" data-systemnames="">Decargar ZIP</button><button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script{
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/plugins/date.format/date.format.js"></script>
+    <script src=/js/repository/search.js?v=1.0.1" type="text/javascript"></script>
+}

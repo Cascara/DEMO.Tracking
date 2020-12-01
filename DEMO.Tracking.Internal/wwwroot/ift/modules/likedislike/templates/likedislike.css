@@ -1,0 +1,13 @@
+.like-container-entity-node {
+  float: left;
+  margin-right: 2em;
+}
+.like-container-entity-node > div {
+  display: inline;
+}
+.dislike-container-entity-node {
+  float: left;
+}
+.dislike-container-entity-node > div {
+  display: inline;
+}

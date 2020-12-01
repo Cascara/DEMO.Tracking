@@ -1,0 +1,23 @@
+﻿@{
+    Layout = "_Layout_External";
+}
+
+<div class="row" style="padding-top: 70px; padding-bottom: 50px;">
+    <div class="col-md-3 radix-layouts-column1 panel-panel">&nbsp;</div>
+    <div class="col-md-6 radix-layouts-column1 panel-panel" style="text-align: center;">
+        Lo sentimos, usted no tiene permisos de acceso a esta sección<br /><br />
+        <button id="regresar" type="button" name="button" class="btn btn-warning">Regresar al inicio de sesión</button>
+    </div>
+    <div class="col-md-3 radix-layouts-column1 panel-panel">&nbsp;</div>
+</div>
+
+@section script{
+    <script type="text/javascript">
+        var id = '';
+        $('#regresar').click(function (e) {
+            $('#regresar').attr('disabled', 'disabled');
+
+            window.location.href = "/Account/Logout";
+        });
+    </script>
+}

@@ -1,0 +1,35 @@
+﻿@{
+    Layout = "_Layout_Fullscreen";
+
+    ViewBag.Title = ViewBag.Name;
+
+    IConfiguration configuration = ViewBag.Configuration;
+}
+
+@section head{
+    <link rel="stylesheet" href="~/plugins/tableexport/css/tableexport.min.css">
+}
+
+<div class="row report" style="display: none;">
+    <div class="col-sm-12">
+        <table id="report" class="table table-hover table-stripped table-bordered" data-url-integration="@configuration["ApiIntegration"]" style="width: 100%;">
+            <tbody class="no-border-x hover">
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row report" style="display: none;">
+    <div class="col-sm-12">
+        <br />
+        <button id="btnExport" type="button" tableexport-id="b2ca256-xlsx" class="btn btn-default xlsx" style="display: none;">Exportar a Excel</button>
+    </div>
+</div>
+<div class="row message" style="padding-top: 20px; font-weight: bold; padding-bottom: 10px;">
+    <div class="col-sm-12" style="text-align: center;">
+        Por el momento el reporte "@ViewBag.Name" no puede ser generado.
+    </div>
+</div>
+
+@section script{
+    <script src="~/js/report/report.js?v=1.0.4" type="text/javascript"></script>
+}

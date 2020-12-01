@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = "Calendario";
+
+    List<BusinessRule> fechas = ViewBag.Calendario;
+    IConfiguration configuration = ViewBag.Configuration;
+}
+
+@section head{
+    <script type="text/javascript">
+        var fechas = @Html.Raw(JsonConvert.SerializeObject(fechas, new JsonSerializerSettings() { ContractResolver = new CamelCasePropertyNamesContractResolver() }));
+    </script>
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <table id="dtuFechas" class="table table-hover table-stripped table-bordered">
+            <thead class="no-border">
+                <tr>
+                    <th>Clave</th>
+                    <th>Nombre</th>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+            <tbody class="no-border-x hover">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="divModalFecha" class="modal fade" role="dialog" style="overflow-y: scroll;" data-backdrop="static" data-keyboard="false" data-user-id="00000000-0000-0000-0000-000000000000">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Fecha</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Clave:</label>
+                            <input id="key" type="text" min="1" class="form-control" disabled />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Nombre:</label>
+                            <input id="name" type="text" maxlength="100" class="form-control" disabled />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Fecha:</label>
+                            <input id="datetime" type="text" maxlength="100" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="save" type="button" class="btn btn-success"><i class="icon icon-disk"></i> Guardar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script{
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/plugins/date.format/date.format.js"></script>
+    <script type="text/javascript" src="/plugins/jquery-mask/jquery.mask.min.js"></script>
+    <script src="~/js/administration/calendario.js?v=1.0.0" type="text/javascript"></script>    
+}

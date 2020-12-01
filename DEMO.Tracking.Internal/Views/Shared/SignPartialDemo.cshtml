@@ -1,0 +1,125 @@
+﻿@{
+    IConfiguration configuration = ViewBag.Configuration;
+    ActivityInstance activityInstance = ViewBag.ActivityInstance;
+}
+
+
+    <div id="signature" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" style="display: none;" data-intance-id="@ViewBag.FormInstanceId">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">e.firma</h4>
+                </div>
+                <!-- Form inside modal -->
+                <div class="content">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Contraseña e.firma:</label>
+                                    <input id="password" type="password" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Archivo .cer: </label>
+                                    <input id="publicKey" type="file" class="styled" accept=".cer,.cert">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Archivo .key: </label>
+                                    <input id="privateKey" type="file" class="styled" accept=".key">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <span id="waitSignature" class="pull-left" style="display: none;"><img src="" style="margin-right: 4px;"> Firmando, espere ...</span>
+                        <button id="cancelSignature" type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button id="signFormInstance" type="submit" class="btn btn-success">Firmar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/cryptojs/rollups/aes.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/cryptojs/rollups/hmac-md5.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/cryptojs/rollups/hmac-ripemd160.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/cryptojs/rollups/hmac-sha1.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/cryptojs/rollups/hmac-sha224.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/cryptojs/rollups/hmac-sha256.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/cryptojs/rollups/hmac-sha3.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/cryptojs/rollups/hmac-sha384.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/cryptojs/rollups/hmac-sha512.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/cryptojs/rollups/md5.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/cryptojs/rollups/pbkdf2.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/cryptojs/rollups/rabbit-legacy.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/cryptojs/rollups/rabbit.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/cryptojs/rollups/rc4.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/cryptojs/rollups/ripemd160.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/cryptojs/rollups/sha1.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/cryptojs/rollups/sha224.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/cryptojs/rollups/sha256.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/cryptojs/rollups/sha3.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/cryptojs/rollups/sha384.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/cryptojs/rollups/sha512.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/cryptojs/rollups/tripledes.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/cryptojs/cryptojs-util.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/standfordrsa/base64.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/standfordrsa/jsbn.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/standfordrsa/jsbn2.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/standfordrsa/prng4.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/standfordrsa/rng.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/standfordrsa/rsa.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/standfordrsa/rsa2.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/kjur/asn1hex-1.1.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/kjur/crypto-1.1.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/kjur/rsapem-1.1.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/kjur/rsasign-1.2.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/kjur/x509-1.1.js"></script>
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/signature/signature.js"></script>
+
+    <script type="text/javascript" src="@configuration["WebFramework"]/undani/js/undani/demo/undani.signature.js?v=0.0.1"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var formSignature = $('#signature').uLoginSignature({
+                publicKey: 'publicKey',
+                privateKey: 'privateKey',
+                password: 'password'
+            });
+
+            $('#signFormInstance').click(function (e) {
+                $('#signFormInstance').attr('disabled', true);
+                $('#cancelSignature').attr('disabled', true);
+                formSignature.Sign();
+            });
+
+            $('#cancelSignature').click(function (e) {
+                $('#signFormInstance').attr('disabled', false);
+                $('#' + $.ActionSelected).attr('disabled', false);
+            });
+
+            $(formSignature).on("starting", function (event) {
+                $('#waitSignature').show();
+            });
+
+            $(formSignature).on("error", function (event, errorThrown) {
+                $('#signFormInstance').attr('disabled', false);
+                alert(errorThrown);
+                $('#waitSignature').hide();
+            });
+
+            $(formSignature).on("done", function (event) {
+                $.FinalExecution();
+            });
+        });
+    </script>

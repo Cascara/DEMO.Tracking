@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Borradores";
+
+    List<Message> mesagges = ViewBag.Drafts;
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <table id="dtuDrafts" class="table table-hover table-stripped table-bordered">
+            <thead class="no-border">
+                <tr>
+                    <th style="width: 200px;">Folio</th>
+                    <th>Asunto</th>
+                    <th style="width: 200px;">Creado</th>
+                </tr>
+            </thead>
+            <tbody class="no-border-x hover">
+                @if (mesagges.Count > 0)
+                {
+                    @foreach (Message message in mesagges)
+                    {
+                        <tr class="draft" style="cursor: pointer;" data-message-id="@message.Id"><td><strong>@message.ProcedureInstanceKey</strong></td><td>@message.FlowName</td><td>@message.Start.ToString("dd/MM/yyyy HH:mm")</td></tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="3" style="text-align: center;">No tiene borradores</td></tr>
+                }
+            </tbody>
+        </table>
+        <ul class="pagination">
+            <li><a href="#">&laquo;</a></li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">&raquo;</a></li>
+        </ul>
+    </div>
+</div>
+
+@section script{ 
+    <script src="~/js/inbox/draft.js?v=1.0.0" type="text/javascript"></script>
+}
